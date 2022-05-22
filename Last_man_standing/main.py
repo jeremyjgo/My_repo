@@ -1,6 +1,6 @@
  # 100 people are sat in order around a table.
  # Person 1 is given a gun and is going to kill the first living person on its left (person2).
- # Then he passes the gun to the next living person on the right.
+ # Then he passes the gun to the next living person.
  # It continues until only one person is alive.
  # Who is it ?
 
