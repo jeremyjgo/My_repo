@@ -25,8 +25,8 @@ while len(people_alive) > 1:
             # If the shooter is the one with the last number of those alive after the shoot, 
             # He needs to pass the gun to the first person in the list
             x = 0
-            num_rounds = num_rounds + 1
+            num_rounds +=  1
         else:
-            x = x + 1
+            x += 1
 
 print(f"Out of {inital_candidates} initial candidates, {people_alive} is the last person standing after {num_rounds} rounds")
