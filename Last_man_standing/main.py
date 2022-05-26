@@ -18,7 +18,7 @@ while len(people_alive) > 1:
         del people_alive[0]
         # The shooter becomes the first person alive in the list
         x = 0
-        num_rounds = num_rounds + 1
+        num_rounds +=  1
     else: 
         del people_alive[x+1]
         if people_alive[x] == people_alive[-1]:
