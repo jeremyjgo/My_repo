@@ -58,7 +58,7 @@ while still_wanna_play:
         
         ## Checks that user inputs only a single letter
         while True:
-            guess_check = (input("\nGuess a single letter. (no accents) ")).lower()
+            guess_check = input("\nGuess a single letter. (no accents) ").lower()
             if len(guess_check) == 1 and guess_check in string.ascii_letters:
                 guess = guess_check
                 break

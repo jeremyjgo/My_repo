@@ -24,14 +24,15 @@ def check_bid(bid):
 
 def check_winner(players):
     max_bid = 0
-    player_idx = 0
     winner = ''
+    player_idx = 0
     for player in players:
         if players[player_idx]['bid'] > max_bid:
-            max_bid= players[player_idx]['bid']
+            max_bid = players[player_idx]['bid']
             winner = players[player_idx]['name']
         player_idx +=1
     return winner, max_bid
+
 
 while more_players:
     bidder = input('Enter your name ')
@@ -39,4 +40,3 @@ while more_players:
     more_players = add_new_bidder(name=bidder,bid=bid_entered)
 winner, max_bid = check_winner(bidders)
 print(f"The winner is {winner} with a bid of €{max_bid} ")
-print(bidders)
