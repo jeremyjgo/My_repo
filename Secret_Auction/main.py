@@ -36,7 +36,15 @@ def check_winner(players):
 
 while more_players:
     bidder = input('Enter your name ')
-    bid_entered = int(input('Place your bid € '))
+    #https://stackoverflow.com/questions/23294658/asking-the-user-for-input-until-they-give-a-valid-response
+    while True:
+        try:
+            bid_entered = int(input('Place your bid € '))
+        except ValueError:
+            print("Enter only a number")
+            continue    
+        else:
+            break
     more_players = add_new_bidder(name=bidder,bid=bid_entered)
 winner, max_bid = check_winner(bidders)
 print(f"The winner is {winner} with a bid of €{max_bid} ")
