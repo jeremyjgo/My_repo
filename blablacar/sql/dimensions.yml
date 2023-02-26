@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: dim_cities
+    description: Dimensions table mapping a city with its corresponding agglomeration and country
+    config:
+      materialized: table
+    columns:
+      - name: city_id
+        data_type: STRING
+        description: The unique identifier for a city
+        tests:
+          - not_null
+          - unique
+      - name: city_name
+        data_type: STRING
+        description: The common name for the city
+        tests:
+          - not_null
+      - name: agglomeration_id
+        data_type: STRING
+        description: > 
+          The unique identifier for an agglomeration, which is a bigger city close to a big city.
+        tests:
+          - not_null
+      - name: agglomeration_name
+        data_type: STRING
+        description: > 
+          The common name for an agglomeration, which is a bigger city close to a big city.
+        tests:
+          - not_null
+      - name: country_id
+        data_type: STRING
+        description: The unique ISO identifier for a country.
+        tests:
+          - not_null
+      - name: country_name
+        data_type: STRING
+        description: The common name for a country.
+        tests:
+          - not_null
+

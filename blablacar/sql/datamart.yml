@@ -1,0 +1,120 @@
+version: 2
+
+models:
+  - name: datamart_trips_supply
+    description: > 
+      Fact table partitionned by published_date returning the number of trips between two cities. 
+      If a full route contains some stops, the table will return a row per available trip for the passenger.
+      The table is clusterized by the departure_city, arrival_city and is_full_trip fields
+    config:
+      materialized: table
+    columns:
+      - name: published_date
+        data_type: DATE
+        description: The date at which the trip was published
+        tests:
+          - not_null
+      - name: departure_date
+        data_type: DATE
+        description: The date of departure
+        tests:
+          - not_null
+      - name: arrival_date
+        data_type: DATE
+        description: The date of arrival
+        tests:
+          - not_null
+      - name: departure_city
+        data_type: STRING
+        description: The departure city for the trip. 
+        tests: 
+          - not_null
+          - relationships:
+              to: ref('dim_cities')
+              field: city_id
+      - name: arrival_city
+        data_type: STRING
+        description: The arrival city for the trip. 
+        tests: 
+          - not_null
+          - relationships:
+              to: ref('dim_cities')
+              field: city_id
+      - name: currency
+        data_type: STRING
+        description: The currency of the fare 
+        tests: 
+          - not_null
+          - relationships:
+              to: ref('stg_exchange_rates')
+              field: from_currency
+      - name: has_auto_passenger_acceptation
+        data_type: BOOLEAN
+        description: Is the auto acceptation for passengers enabled
+        tests: 
+          - not_null
+      - name: is_using_insurance
+        data_type: BOOLEAN
+        description: Is the trip insured
+        tests: 
+          - not_null
+      - name: is_verified_driver
+        data_type: BOOLEAN
+        description: Is the driver verified when posting the trip
+        tests: 
+          - not_null
+      - name: is_super_driver
+        data_type: BOOLEAN
+        description: Is the driver a super driver when posting the trip
+        tests: 
+          - not_null
+      - name: has_free_back_seat
+        data_type: BOOLEAN
+        description: Is there a back seat left empty for passengers comfort
+        tests: 
+          - not_null
+      - name: number_of_stops_in_route
+        data_type: INTEGER
+        description: The number of stops in the full route. Will be 0 for a non-stop ride
+        tests: 
+          - not_null
+      - name: is_full_trip
+        data_type: BOOLEAN
+        description: Is the trip between the departure and arrival city the full route or is is just a portion of it
+        tests: 
+          - not_null
+      - name: passenger_capacity
+        data_type: INTEGER
+        description: The common passenger capacity for trips between departure and arrival cities
+        tests: 
+          - not_null
+      - name: price_per_passanger_local_cur
+        data_type: FLOAT
+        description: The common price per passenger in local currency for trips between departure and arrival cities 
+        tests: 
+          - not_null
+      - name: distance_km
+        data_type: FLOAT
+        description: The total distance in kilometers for all trips between departure and arrival cities 
+        tests: 
+          - not_null
+      - name: duration_min
+        data_type: FLOAT
+        description: The total duration in minutes for all trips between departure and arrival cities 
+        tests: 
+          - not_null
+      - name: trips_cnt
+        data_type: INTEGER
+        description: The distinct number of trips between departure and arrival cities 
+        tests: 
+          - not_null
+      - name: drivers_cnt
+        data_type: INTEGER
+        description: The distinct number of drivers driving between departure and arrival cities 
+        tests: 
+          - not_null
+      - name: insurance_amount_local_cur
+        data_type: FLOAT
+        description: The total amount paid by the driver for the full route in local currency 
+        tests: 
+          - not_null

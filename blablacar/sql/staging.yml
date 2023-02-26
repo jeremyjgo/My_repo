@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: stg_exchange_rates
+    description: Staging table mapping a the exchange rate between two currencies for each day partitionned by exchange_date.
+    config:
+      materialized: table
+    columns:
+      - name: exchange_date
+        data_type: DATE
+        description: The date for which the exchange rate is valid.
+        tests: 
+          - not_null
+      - name: from_currency
+        data_type: STRING
+        description: The based currency in the exchange
+        tests:
+          - not_null
+      - name: to_currency
+        data_type: STRING
+        description: The target currency in the exchange
+        tests:
+          - not_null
+      - name: exchange_rate
+        data_type: FLOAT
+        description: The exchange rate between the two specific currencies on the day of the partition.
+        tests:
+          - not_null
