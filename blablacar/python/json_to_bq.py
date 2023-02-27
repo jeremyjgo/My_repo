@@ -120,16 +120,3 @@ class BigQueryTable:
 
 
 
-dataset_id = 'my_dataset'
-table_id = 'my_table'
-table_schema = [
-    bigquery.SchemaField("column1", "DATE"),
-    bigquery.SchemaField("column2", "INTEGER"),
-    bigquery.SchemaField("column3", "FLOAT"),
-    bigquery.SchemaField("column4", "BOOLEAN")
-]
-partitionby = 'day'
-partition_field = 'column1'
-cluster_fields = ['column2','column3']
-my_table = BigQueryTable(dataset_id = dataset_id, table_id = table_id, schema =table_schema)
-my_table.create_table_if_not_exists(partition_field=partition_field, partition_type=partitionby, clustering_fields=cluster_fields)
