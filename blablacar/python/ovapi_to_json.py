@@ -76,6 +76,9 @@ class OVAPIClient:
         json_str = "\n".join([json.dumps(line) for line in lines_with_date])
         return json_str
 
+    
+# TODO delete those dev comments before submitting
+
 # Example usage
 # client = OVAPIClient()
 # lines_json = client.flatten_json()
