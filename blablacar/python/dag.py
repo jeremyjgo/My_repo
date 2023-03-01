@@ -17,7 +17,7 @@ with DAG(
     dag_id='staging.ovapi_lines',   # The ID of the DAG
     default_args=default_args,      # The default arguments
     start_date=datetime(2023, 2, 28),   # The date and time at which the DAG will start
-    schedule_interval='0 1 * * *'   # The schedule for running the DAG
+    schedule_interval='0 1 * * *'   # The schedule for running the DAG, every day at 1:00 AM
     ) as dag:
 
     # Define the first task, which calls the OVAPIClient.flatten_json method
@@ -43,16 +43,16 @@ with DAG(
             clustering_fields=['TransportType', 'LineWheelchairAccessible'],    # The clustering fields for the table
             schema=[                    # The schema for the table
                 bigquery.SchemaField(name="line", field_type="STRING", mode="REQUIRED", description ="The id of the line"),
-                bigquery.SchemaField(name="LineWheelchairAccessible", field_type="STRING", description ="If the line ACCESSIBLE, NOTACCESSIBLE or UNKNOWN to wheelchairs"),
-                bigquery.SchemaField(name="TransportType", field_type="STRING", description ="The transport type BUS METRO or TRAM"),
-                bigquery.SchemaField(name="DestinationName50", field_type="STRING", description ="The name of the destination of the line"),
-                bigquery.SchemaField(name="DataOwnerCode", field_type="STRING", description ="The code of the data owner"),
-                bigquery.SchemaField(name="DestinationCode", field_type="STRING", description ="The code of the destination of the line"),
-                bigquery.SchemaField(name="LinePublicNumber", field_type="STRING", description ="The public number of the line"),
-                bigquery.SchemaField(name="LinePlanningNumber", field_type="STRING", description ="The planning number for the line"),
-                bigquery.SchemaField(name="LineName", field_type="STRING", description ="The name of the line"),
-                bigquery.SchemaField(name="LineDirection", field_type="STRING", description ="The direction of the line"),
-                bigquery.SchemaField(name="execution_date", field_type="DATE", description ="The date at which the data was pulled from the API")
+                bigquery.SchemaField(name="LineWheelchairAccessible", field_type="STRING", mode="REQUIRED", description ="If the line ACCESSIBLE, NOTACCESSIBLE or UNKNOWN to wheelchairs"),
+                bigquery.SchemaField(name="TransportType", field_type="STRING", mode="NULLABLE", description ="The transport type BUS METRO or TRAM"),
+                bigquery.SchemaField(name="DestinationName50", field_type="STRING", mode="NULLABLE", description ="The name of the destination of the line"),
+                bigquery.SchemaField(name="DataOwnerCode", field_type="STRING", mode="REQUIRED", description ="The code of the data owner"),
+                bigquery.SchemaField(name="DestinationCode", field_type="STRING", mode="REQUIRED", description ="The code of the destination of the line"),
+                bigquery.SchemaField(name="LinePublicNumber", field_type="STRING", mode="REQUIRED", description ="The line number used when communicated with travellers"),
+                bigquery.SchemaField(name="LinePlanningNumber", field_type="STRING", mode="NULLABLE", description ="The planning number for the line"),
+                bigquery.SchemaField(name="LineName", field_type="STRING", mode="NULLABLE", description ="The name of the line"),
+                bigquery.SchemaField(name="LineDirection", field_type="STRING", mode="REQUIRED", description ="The direction of the line"),
+                bigquery.SchemaField(name="execution_date", field_type="DATE", mode="REQUIRED", description ="The date at which the data was pulled from the API")
             ]
         )
 

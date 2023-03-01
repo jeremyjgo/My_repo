@@ -11,18 +11,19 @@ class OVAPIClient:
     BASE_URL = "http://v0.ovapi.nl"
     ENDPOINT_LINE = BASE_URL + "/line/"
 
-    # Define the schema for the expected data structure
     LINE_SCHEMA = {
-        "LineWheelchairAccessible": str,
-        "TransportType": str,
-        "DestinationName50": str,
-        "DataOwnerCode": str,
-        "DestinationCode": str,
-        "LinePublicNumber": str,
-        "LinePlanningNumber": str,
-        "LineName": str,
-        "LineDirection": int
+    # This dictionnary gives for each expected key in the data, its expected data type and whether the field is mandatory (should always be returned by the API) or not.
+    "LineWheelchairAccessible": {"type": str, "mandatory": False},
+    "TransportType": {"type": str, "mandatory": False},
+    "DestinationName50": {"type": str, "mandatory": False},
+    "DataOwnerCode": {"type": str, "mandatory": True},
+    "DestinationCode": {"type": str, "mandatory": False},
+    "LinePublicNumber": {"type": str, "mandatory": False},
+    "LinePlanningNumber": {"type": str, "mandatory": True},
+    "LineName": {"type": str, "mandatory": False},
+    "LineDirection": {"type": int, "mandatory": True}
     }
+
 
     def get_lines(self):
         """Fetches lines data from OVAPI"""
@@ -42,15 +43,19 @@ class OVAPIClient:
         """Validates that the line data matches the expected schema"""
         try:
             # Validate that the line data matches the expected schema
-            for key, expected_type in self.LINE_SCHEMA.items():
+            for key, expected_type, mandatory in self.LINE_SCHEMA:
                 if key not in line_data:
-                    raise ValueError(f"Missing key '{key}' in line data")
-                if not isinstance(line_data[key], expected_type):
+                    if mandatory:
+                        raise ValueError(f"Missing key '{key}' in line data")
+                    else:
+                        line_data[key] = None
+                elif not isinstance(line_data[key], expected_type):
                     raise ValueError(f"Unexpected data type for key '{key}' in line data")
             return True
         except ValueError as e:
             print(e)
             return False
+
 
     def flatten_json(self):
         """Flattens the received json, to set it up for Big Query"""
@@ -77,11 +82,3 @@ class OVAPIClient:
         return json_str
 
     
-# TODO delete those dev comments before submitting
-
-# Example usage
-# client = OVAPIClient()
-# lines_json = client.flatten_json()
-# with open("lines.json", "w") as f:
-#     f.write(lines_json)
-# print(lines_json)
