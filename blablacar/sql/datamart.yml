@@ -5,7 +5,7 @@ models:
     description: > 
       Fact table partitionned by published_date returning the number of trips between two cities. 
       If a full route contains some stops, the table will return a row per available trip for the passenger.
-      The table is clusterized by the departure_city, arrival_city and is_full_trip fields
+      The table is clusterized by the departure_city, arrival_city and is_full_trip fields. Also it is partionned by published_date for each day.
     config:
       materialized: table
     columns:
