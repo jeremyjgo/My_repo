@@ -1,7 +1,7 @@
        WITH 
 
             trips_per_country AS (
-            -- Rreturns the number of trips published per departure country during the last completed month.
+            -- Returns the number of trips published per departure country during the last completed month.
      SELECT cities.country_id AS departure_country,
             SUM(trips.trips_cnt) AS trips_cnt
        FROM datamart_trips_supply AS trips
