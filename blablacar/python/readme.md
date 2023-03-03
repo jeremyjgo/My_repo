@@ -1,5 +1,8 @@
 General Observations:
 
+No additional action are needed to execute the code. The files can be uploaded as they are to the code-base and the DAG to a
+Airflow. It just needs to be turned on so that the CRON scheduling is enabled.
+
 During the case study, I tried to use Object Oriented Programming as much as possible,
 so that it could (theoratically) be added to a more complex production environnement.
 
