@@ -7,3 +7,6 @@ Limitations:
 As the API doesn't provide a date information, the data returned is always the data available at the time of the call. Therefore there doesn't seem to be a way a getting data from last year for example, for a potential backfill, if needed.
 
 Columns are not renamed to keep the data as it comes from the API.
+
+I my code, Big Query credentials are specified within a json file. 
+However, I assume that in a production environment, a service account will be used and credentials will be kept in a separate location.
